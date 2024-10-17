@@ -1,0 +1,14 @@
+esphome:
+  name: rainfall_device
+
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+
+sensor:
+  - platform: custom
+    lambda: |-
+      id(df_rainfall_sensor): !include dfrobot_rainfall_sensor/sensor.py
+    sensors:
+      - name: "Rainfall Sensor"
+        id: df_rainfall_sensor

@@ -1,0 +1,1 @@
+DOMAIN = 'dfrobot_rainfall_sensor'
