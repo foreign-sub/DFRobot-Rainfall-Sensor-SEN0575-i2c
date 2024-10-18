@@ -1,9 +1,17 @@
+#pragma once
+
 #ifndef __DFROBOT_RAINFALL_SENSOR_H__
 #define __DFROBOT_RAINFALL_SENSOR_H__
 
 #include <Arduino.h>
 #include <Wire.h>
-#include <esphome/components/i2c/i2c.h>
+#include <esphome.h>
+#include "esphome/core/component.h"
+#include "esphome/components/i2c/i2c.h"
+#include "esphome/components/sensor/sensor.h"
+
+namespace esphome{
+namespace dfrobot_sen0575_i2c{
 
 class DFRobotRainfallSensor : public Component, public PollingComponent, public i2c::I2CDevice {
 public:
@@ -37,3 +45,6 @@ private:
 };
 
 #endif
+
+} // namespace dfrobot_sen0575_i2c
+} // namespace esphome

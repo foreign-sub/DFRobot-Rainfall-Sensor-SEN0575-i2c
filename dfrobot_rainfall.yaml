@@ -8,7 +8,7 @@ i2c:
 sensor:
   - platform: custom
     lambda: |-
-      id(df_rainfall_sensor): !include dfrobot_rainfall_sensor/sensor.py
+      id(df_rainfall_sensor): !include components/dfrobot_sen0575_i2c/sensor.py
     sensors:
       - name: "Rainfall Sensor"
         id: df_rainfall_sensor

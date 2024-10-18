@@ -1,4 +1,11 @@
-#include "sensor.h"
+#include "dfrobot_sen0575_i2c.h"
+#include "esphome/core/log.h"
+#include "esphome/core/hal.h"
+
+namespace esphome{
+namespace dfrobot_sen0575_i2c{
+
+static const char *const TAG = "dfrobot_sen0575_i2c";
 
 DFRobotRainfallSensor::DFRobotRainfallSensor(i2c::I2CDevice *parent, uint8_t address) : i2c::I2CDevice(parent), PollingComponent(15000) {
     _deviceAddr = address;
@@ -8,6 +15,7 @@ void DFRobotRainfallSensor::setup() {
     if (!begin()) {
         ESP_LOGE("DFRobotRainfallSensor", "Failed to initialize sensor");
     }
+    ESP_LOGCONFIG(TAG, "Setting up SEN0575...");
 }
 
 void DFRobotRainfallSensor::update() {
@@ -76,3 +84,6 @@ uint8_t DFRobotRainfallSensor::writeRegister(uint8_t reg, void* pBuf, size_t siz
     delay(100);
     return 0;
 }
+
+} // namespace dfrobot_sen0575_i2c
+} // namespace esphome
