@@ -15,15 +15,17 @@ namespace dfrobot_sen0575_i2c{
 
 class DFRobotRainfallSensor : public Component, public PollingComponent, public i2c::I2CDevice {
 public:
-    #define I2C_REG_PID                            0x00
-    #define I2C_REG_VID                            0x02
-    #define I2C_REG_VERSION                        0x0A
-    #define I2C_REG_TIME_RAINFALL                  0x0C
-    #define I2C_REG_CUMULATIVE_RAINFALL            0x10
-    #define I2C_REG_RAW_DATA                       0x14
-    #define I2C_REG_SYS_TIME                       0x18
-    #define I2C_REG_RAIN_HOUR                      0x26
-    #define I2C_REG_BASE_RAINFALL                  0x28
+    enum class Registers : uint8_t {
+        PID = 0x00,
+        VID = 0x02,
+        VERSION = 0x0A,
+        TIME_RAINFALL = 0x0C,
+        CUMULATIVE_RAINFALL = 0x10,
+        RAW_DATA = 0x14,
+        SYS_TIME = 0x18,
+        RAIN_HOUR = 0x26,
+        BASE_RAINFALL = 0x28
+    };
 
     DFRobotRainfallSensor(i2c::I2CDevice *parent, uint8_t address);
     ~DFRobotRainfallSensor(){};
