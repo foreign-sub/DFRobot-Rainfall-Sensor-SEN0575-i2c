@@ -1,11 +1,5 @@
 #pragma once
 
-#ifndef __DFROBOT_RAINFALL_SENSOR_H__
-#define __DFROBOT_RAINFALL_SENSOR_H__
-
-#include <Arduino.h>
-#include <Wire.h>
-#include <esphome.h>
 #include "esphome/core/component.h"
 #include "esphome/components/i2c/i2c.h"
 #include "esphome/components/sensor/sensor.h"
