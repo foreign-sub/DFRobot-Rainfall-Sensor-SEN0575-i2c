@@ -14,7 +14,7 @@ Add the following lines to your `configuration.yaml` file to include the custom 
 
 ```yaml
 external_components:
-  - source: github://foreign-sub/DFRobot-Rainfall-Sensor-SEN0575-
+  - source: github://foreign-sub/DFRobot-Rainfall-Sensor-SEN0575-i2c
     components: [dfrobot_sen0575_i2c]
 ```
 
