@@ -42,7 +42,7 @@ public:
     uint8_t readRegister(uint8_t reg, void* pBuf, size_t size);
     uint8_t writeRegister(uint8_t reg, void* pBuf, size_t size);
 
-private:
+protected:
     uint8_t _deviceAddr = 0x1D;
 };
 
