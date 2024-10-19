@@ -33,9 +33,9 @@ wifi:
 captive_portal:
 
 external_components:
-    - source:
-      type: local
-      path: components
+  - source:
+    type: local
+    path: components
 
 i2c:
   sda: GPIO21
