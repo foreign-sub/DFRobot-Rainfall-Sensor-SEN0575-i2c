@@ -8,8 +8,8 @@
 namespace esphome{
 namespace dfrobot_sen0575_i2c{
 
-class DFRobotSen0575I2C : : public sensor::Sensor, public PollingComponent, public i2c::I2CDevice {
-public:
+class DFRobotSen0575I2C : public sensor::Sensor, public PollingComponent, public i2c::I2CDevice {
+ public:
     void set_cumulative_rainfall(sensor::Sensor *cumulative_rainfall) { cumulative_rainfall_ = cumulative_rainfall; }
     void set_rainfall_within_hour(sensor::Sensor *rainfall_within_hour) { rainfall_within_hour_ = rainfall_within_hour; }
     void set_raw_data(sensor::Sensor *raw_data) { raw_data_ = raw_data; }
@@ -30,7 +30,7 @@ public:
     uint8_t readRegister(uint8_t reg, void* pBuf, size_t size);
     uint8_t writeRegister(uint8_t reg, void* pBuf, size_t size);
 
-protected:
+ protected:
     uint8_t _deviceAddr = 0x1D;
     sensor::Sensor *cumulative_rainfall_;
     sensor::Sensor *rainfall_within_hour_;
