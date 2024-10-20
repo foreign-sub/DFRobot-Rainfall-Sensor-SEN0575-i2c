@@ -15,7 +15,6 @@ Add the following lines to your `configuration.yaml` file to include the custom 
 ```yaml
 external_components:
   - source: github://foreign-sub/DFRobot-Rainfall-Sensor-SEN0575-i2c
-
 ```
 
 Alternatively, you can download the component and place it in your custom_components directory.
@@ -28,8 +27,8 @@ Ensure your ESPHome device is configured to use the I2C interface. Here is an ex
 i2c:
   sda: GPIO21
   scl: GPIO22
+  frequency: 100000.0
   id: bus_a
-
 ```
 
 Step 3: Add the Sensor to Your Configuration
@@ -39,15 +38,15 @@ Add the sensor to your configuration.yaml file:
 sensor:
   - platform: dfrobot_sen0575_i2c
     i2c_id: bus_a
+    #id: rainfall_sensor # optional id
     cumulative_rainfall:
       name: "Cumulative Rainfall"
     rainfall_within_hour:
       name: "Rainfall within hour"
     raw_data:
       name: "Raw Data"
-    sensor_working_time:
-      name: "Sensor Working Time"
-
+    working_time:
+      name: "Working Time"
 ```
 
 or use the example yaml files.
@@ -62,7 +61,7 @@ The Rainfall Sensor entity will display the cumulative rainfall since the sensor
 
 The Rainfall within 1 hour entity will display the cumulative rainfall within the last hour.
 
-### Raw Data
+### Raw Data
 
 The Raw Data entity will display the number of tipping bucket counts, which can be used to calculate rainfall.
 
@@ -72,25 +71,46 @@ The Sensor Working Time entity will display the total working time of the sensor
 
 ## Methods
 
+```cpp
 begin()
+```
+
 Initializes the sensor and checks for successful communication.
 
+```cpp
 getFirmwareVersion()
+```
+
 Returns the firmware version of the sensor.
 
+```cpp
 getRainfall()
+```
+
 Returns the cumulative rainfall since the sensor started working.
 
+```cpp
 getRainfall(uint8_t hour)
+```
+
 Returns the cumulative rainfall within the specified time (1-24 hours).
 
+```cpp
 getRawData()
+```
+
 Returns the number of tipping bucket counts.
 
+```cpp
 setRainAccumulatedValue(float accumulatedValue)
+```
+
 Sets the accumulated rainfall value.
 
-getSensorWorkingTime()
+```cpp
+getWorkingTime()
+```
+
 Returns the working time of the sensor in hours.
 
 ## Troubleshooting
