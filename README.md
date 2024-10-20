@@ -133,7 +133,10 @@ Contributions are welcome. Please submit pull requests or issues on the GitHub r
 
 ## Compatibility
 
-This component has been tested with the following microcontrollers:
+This component has not been tested with the following microcontrollers:
+
 ESP32
+
 ESP8266
+
 Please report any compatibility issues or additional supported microcontrollers.
