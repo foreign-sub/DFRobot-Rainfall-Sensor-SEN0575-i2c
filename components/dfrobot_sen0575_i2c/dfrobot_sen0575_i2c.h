@@ -38,7 +38,5 @@ protected:
     sensor::Sensor *sensor_working_time_;
 };
 
-#endif
-
 } // namespace dfrobot_sen0575_i2c
 } // namespace esphome
