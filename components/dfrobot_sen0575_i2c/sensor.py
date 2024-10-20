@@ -18,9 +18,9 @@ CODEOWNERS = ["@foreign-sub"]
 DEPENDENCIES = ["i2c"]
 MULTI_CONF = True
 
-dfrobot_sen0575_ns = cg.esphome_ns.namespace("dfrobot_sen0575_i2c")
-DFRobotSen0575Component = dfrobot_sen0575_ns.class_(
-    "DFRobotSen0575Component", cg.Component, i2c.I2CDevice
+dfrobot_sen0575_i2c_ns = cg.esphome_ns.namespace("dfrobot_sen0575_i2c")
+DFRobotSen0575I2C = dfrobot_sen0575_i2c_ns.class_(
+    "DFRobotSen0575I2C", cg.PollingComponent, i2c.I2CDevice
 )
 
 CONF_DFROBOT_SEN0575_ID = "dfrobot_sen0575_id"
@@ -35,7 +35,7 @@ UNIT_MILLIMETERS_PER_HOUR = "mm/h"
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(DFRobotSen0575Component),
+            cv.GenerateID(): cv.declare_id(DFRobotSen0575I2C),
             cv.Optional(CONF_CUMULATIVE_RAINFALL): sensor.sensor_schema(
                 unit_of_measurement=UNIT_MILLIMETER,
                 accuracy_decimals=2,
@@ -64,7 +64,7 @@ CONFIG_SCHEMA = cv.All(
             ),
         }
     )
-    .extend(cv.COMPONENT_SCHEMA)
+    .extend(cv.polling_component_schema("60s"))
     .extend(i2c.i2c_device_schema(CONF_DFROBOT_SEN0575_ADDRESS))
 )
 
@@ -73,47 +73,18 @@ async def to_code(config):
     await cg.register_component(var, config)
     await i2c.register_i2c_device(var, config)
 
-def setup_sensor(hass, config, i2c, id):
-    rainfall_sensor = DFRobotRainfallSensor(i2c, id, config)
-    yield rainfall_sensor
+    if cumulative_rainfall_config := config.get(CONF_CUMULATIVE_RAINFALL):
+        sens = await sensor.new_sensor(cumulative_rainfall_config)
+        cg.add(var.set_cumulative_rainfall(sens))
 
-class DFRobotRainfallSensor(sensor.Sensor, i2c.I2CDevice):
-    def __init__(self, i2c, id, config):
-        super().__init__()
-        self._i2c = i2c
-        self._id = id
-        self._name = config[CONF_NAME]
-        self._device_addr = 0x1D
+    if rainfall_within_hour_config := config.get(CONF_RAINFALL_WITHIN_HOUR):
+        sens = await sensor.new_sensor(rainfall_within_hour_config)
+        cg.add(var.set_rainfall_within_hour(sens))
 
-    def setup(self):
-        self._i2c.begin()
-        if not self.begin():
-            ESP_LOGE("DFRobotRainfallSensor", "Failed to initialize sensor")
+    if raw_data_config := config.get(CONF_RAW_DATA):
+        sens = await sensor.new_sensor(raw_data_config)
+        cg.add(var.set_raw_data(sens))
 
-    def update(self):
-        # Read cumulative rainfall
-        buff = self.read_register(self._device_addr, I2C_REG_CUMULATIVE_RAINFALL, 4)
-        rainfall = (buff | (buff << 8) | (buff << 16) | (buff << 24)) / 10000.0
-        self.publish_state(rainfall)
-
-    def read_register(self, addr, reg, size):
-        return self._i2c.read(addr, reg, size)
-
-    def write_register(self, addr, reg, data, size):
-        return self._i2c.write(addr, reg, data, size)
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def unique_id(self):
-        return self._id
-
-    @property
-    def unit_of_measurement(self):
-        return 'mm'
-
-    @property
-    def device_class(self):
-        return 'rainfall'
+    if sensor_working_time_config := config.get(CONF_SENSOR_WORKING_TIME):
+        sens = await sensor.new_sensor(sensor_working_time_config)
+        cg.add(var.set_sensor_working_time_data(sens))
