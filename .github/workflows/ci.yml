@@ -17,8 +17,8 @@ jobs:
       max-parallel: 3
       matrix:
         file:
-          - dfrobot_rainfall
-          - dfrobot_rainfall_cpp
+          - dfrobot_rainfall_local
+          - dfrobot_rainfall_github
         esphome-version:
           - stable
           - beta
