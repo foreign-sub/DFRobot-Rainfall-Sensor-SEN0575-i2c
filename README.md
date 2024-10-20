@@ -15,7 +15,7 @@ Add the following lines to your `configuration.yaml` file to include the custom 
 ```yaml
 external_components:
   - source: github://foreign-sub/DFRobot-Rainfall-Sensor-SEN0575-i2c
-    components: [dfrobot_sen0575_i2c]
+
 ```
 
 Alternatively, you can download the component and place it in your custom_components directory.
@@ -28,6 +28,8 @@ Ensure your ESPHome device is configured to use the I2C interface. Here is an ex
 i2c:
   sda: GPIO21
   scl: GPIO22
+  id: bus_a
+
 ```
 
 Step 3: Add the Sensor to Your Configuration
@@ -35,44 +37,17 @@ Add the sensor to your configuration.yaml file:
 
 ```yaml
 sensor:
-  - platform: custom
-    lambda: |-
-      auto rainfall_sensor = new DFRobotRainfallSensor(i2c::I2CDevice(*this), 0x1D);
-      App.register_component(rainfall_sensor);
-      return {rainfall_sensor};
-    sensors:
-      - name: "Rainfall Sensor"
-        unit_of_measurement: "mm"
-        device_class: "rainfall"
-        accuracy_decimals: 2
-        id: rainfall_sensor_id
+  - platform: dfrobot_sen0575_i2c
+    i2c_id: bus_a
+    cumulative_rainfall:
+      name: "Cumulative Rainfall"
+    rainfall_within_hour:
+      name: "Rainfall within hour"
+    raw_data:
+      name: "Raw Data"
+    sensor_working_time:
+      name: "Sensor Working Time"
 
-      - name: "Rainfall within 1 hour"
-        unit_of_measurement: "mm"
-        device_class: "rainfall"
-        accuracy_decimals: 2
-        lambda: |-
-          auto sensor = id(rainfall_sensor_id);
-          return sensor->getRainfall(1);
-        update_interval: 60s
-
-      - name: "Raw Data"
-        unit_of_measurement: "count"
-        device_class: "none"
-        accuracy_decimals: 0
-        lambda: |-
-          auto sensor = id(rainfall_sensor_id);
-          return sensor->getRawData();
-        update_interval: 60s
-
-      - name: "Sensor Working Time"
-        unit_of_measurement: "h"
-        device_class: "duration"
-        accuracy_decimals: 2
-        lambda: |-
-          auto sensor = id(rainfall_sensor_id);
-          return sensor->getSensorWorkingTime();
-        update_interval: 60s
 ```
 
 or use the example yaml files in the directory.
