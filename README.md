@@ -50,7 +50,7 @@ sensor:
 
 ```
 
-or use the example yaml files in the directory.
+or use the example yaml files.
 
 ## Usage
 
@@ -60,8 +60,10 @@ The Rainfall Sensor entity will display the cumulative rainfall since the sensor
 
 ### Rainfall within a Specified Time
 
-The Rainfall within 1 hour entity will display the cumulative rainfall within the last hour. You can adjust the time period by changing the hour parameter in the lambda function.
-Raw Data
+The Rainfall within 1 hour entity will display the cumulative rainfall within the last hour.
+
+### Raw Data
+
 The Raw Data entity will display the number of tipping bucket counts, which can be used to calculate rainfall.
 
 ### Sensor Working Time
