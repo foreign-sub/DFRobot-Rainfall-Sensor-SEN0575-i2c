@@ -1,0 +1,53 @@
+---
+
+esphome:
+  name: rainfalldevice
+  friendly_name: test
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+#  encryption:
+#    key: ""
+
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Test Fallback Hotspot"
+    password: ""
+
+captive_portal:
+
+external_components:
+  - source: github://foreign-sub/DFRobot-Rainfall-Sensor-SEN0575-i2c
+
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  id: bus_a
+
+sensor:
+  - platform: dfrobot_sen0575_i2c
+    i2c_id: bus_a
+    cumulative_rainfall:
+      name: "Cumulative Rainfall"
+    rainfall_within_hour:
+      name: "Rainfall within hour"
+    raw_data:
+      name: "Raw Data"
+    sensor_working_time:
+      name: "Sensor Working Time"

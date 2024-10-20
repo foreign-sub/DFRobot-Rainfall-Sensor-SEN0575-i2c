@@ -1,7 +1,7 @@
 ---
 
 esphome:
-  name: rainfall_device
+  name: rainfalldevice
   friendly_name: test
 
 esp32:
@@ -14,8 +14,8 @@ logger:
 
 # Enable Home Assistant API
 api:
-  encryption:
-    key: "="
+#  encryption:
+#    key: ""
 
 ota:
   - platform: esphome
@@ -38,15 +38,16 @@ external_components:
 i2c:
   sda: GPIO21
   scl: GPIO22
+  id: bus_a
 
 sensor:
   - platform: dfrobot_sen0575_i2c
-    sensors:
-      - name: "Rainfall Sensor"
-        id: cumulative_rainfall
-      - name: "Rainfall within 1 hour"
-        id: rainfall_within_hour
-      - name: "Raw Data"
-        id: raw_data
-      - name: "Sensor Working Time"
-        id: sensor_working_time
+    i2c_id: bus_a
+    cumulative_rainfall:
+      name: "Cumulative Rainfall"
+    rainfall_within_hour:
+      name: "Rainfall within hour"
+    raw_data:
+      name: "Raw Data"
+    sensor_working_time:
+      name: "Sensor Working Time"
