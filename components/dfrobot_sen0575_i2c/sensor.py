@@ -16,19 +16,18 @@ from esphome.const import (
 
 CODEOWNERS = ["@foreign-sub"]
 DEPENDENCIES = ["i2c"]
-MULTI_CONF = True
 
 dfrobot_sen0575_i2c_ns = cg.esphome_ns.namespace("dfrobot_sen0575_i2c")
 DFRobotSen0575I2C = dfrobot_sen0575_i2c_ns.class_(
     "DFRobotSen0575I2C", cg.PollingComponent, i2c.I2CDevice
 )
 
-CONF_DFROBOT_SEN0575_ID = "dfrobot_sen0575_id"
 CONF_DFROBOT_SEN0575_ADDRESS = 0x1D
+CONF_DFROBOT_SEN0575_ID = "dfrobot_sen0575_id"
 CONF_CUMULATIVE_RAINFALL = "cumulative_rainfall"
 CONF_RAINFALL_WITHIN_HOUR = "rainfall_within_hour"
 CONF_RAW_DATA = "raw_data"
-CONF_SENSOR_WORKING_TIME = "sensor_working_time"
+CONF_WORKING_TIME = "working_time"
 
 UNIT_MILLIMETERS_PER_HOUR = "mm/h"
 
@@ -37,28 +36,24 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(): cv.declare_id(DFRobotSen0575I2C),
             cv.Optional(CONF_CUMULATIVE_RAINFALL): sensor.sensor_schema(
-                unit_of_measurement=UNIT_MILLIMETER,
-                accuracy_decimals=2,
+                unit_of_measurement=UNIT_MILLIMETER, accuracy_decimals=2,
                 icon=ICON_WATER,
                 device_class=DEVICE_CLASS_PRECIPITATION,
                 state_class=STATE_CLASS_TOTAL_INCREASING,
             ),
             cv.Optional(CONF_RAINFALL_WITHIN_HOUR): sensor.sensor_schema(
-                unit_of_measurement=UNIT_MILLIMETERS_PER_HOUR,
-                accuracy_decimals=2,
+                unit_of_measurement=UNIT_MILLIMETERS_PER_HOUR, accuracy_decimals=2,
                 icon=ICON_WATER,
                 device_class=DEVICE_CLASS_PRECIPITATION_INTENSITY,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
             cv.Optional(CONF_RAW_DATA): sensor.sensor_schema(
-                unit_of_measurement=CONF_COUNT,
-                accuracy_decimals=0,
+                unit_of_measurement=CONF_COUNT, accuracy_decimals=0,
                 device_class=DEVICE_CLASS_PRECIPITATION,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
-            cv.Optional(CONF_SENSOR_WORKING_TIME): sensor.sensor_schema(
-                unit_of_measurement=CONF_HOUR,
-                accuracy_decimals=0,
+            cv.Optional(CONF_WORKING_TIME): sensor.sensor_schema(
+                unit_of_measurement=CONF_HOUR, accuracy_decimals=0,
                 device_class=DEVICE_CLASS_DURATION,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
@@ -67,6 +62,13 @@ CONFIG_SCHEMA = cv.All(
     .extend(cv.polling_component_schema("60s"))
     .extend(i2c.i2c_device_schema(CONF_DFROBOT_SEN0575_ADDRESS))
 )
+
+FINAL_VALIDATE_SCHEMA = i2c.final_validate_device_schema(
+    "dfrobot_sen0575_i2c",
+    min_frequency=100000.0,
+    max_frequency=400000.0,
+)
+
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
@@ -85,6 +87,6 @@ async def to_code(config):
         sens = await sensor.new_sensor(raw_data_config)
         cg.add(var.set_raw_data(sens))
 
-    if sensor_working_time_config := config.get(CONF_SENSOR_WORKING_TIME):
-        sens = await sensor.new_sensor(sensor_working_time_config)
-        cg.add(var.set_sensor_working_time_data(sens))
+    if working_time_config := config.get(CONF_WORKING_TIME):
+        sens = await sensor.new_sensor(working_time_config)
+        cg.add(var.set_working_time(sens))
