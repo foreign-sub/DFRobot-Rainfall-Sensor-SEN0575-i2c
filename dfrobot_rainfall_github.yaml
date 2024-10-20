@@ -26,7 +26,7 @@ i2c:
 sensor:
   - platform: dfrobot_sen0575_i2c
     i2c_id: bus_a
-    #id: rainfall_sensor # optional id
+    # id: rainfall_sensor # optional id
     cumulative_rainfall:
       name: "Cumulative Rainfall"
     rainfall_within_hour:
