@@ -101,6 +101,7 @@ bool DFRobotSen0575I2C::begin() {
 uint8_t DFRobotSen0575I2C::readRegister(uint8_t reg, void* pBuf, size_t size) {
     this->write(this->_deviceAddr, reg);
     if (this->read(this->_deviceAddr, pBuf, size) != size) {
+        ESP_LOGE(TAG, "DFRobot SEN0575 '%s' read error", this->name_.c_str());
         return 0;
     }
     return size;
