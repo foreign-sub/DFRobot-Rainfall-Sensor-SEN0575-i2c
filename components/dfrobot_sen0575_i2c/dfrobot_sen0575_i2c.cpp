@@ -116,7 +116,8 @@ bool DFRobotSen0575I2C::begin_() {
 }
 
 uint8_t DFRobotSen0575I2C::readRegister_(uint8_t reg, uint8_t *pBuf, size_t size) {
-    if (this->read_register(reg, pBuf, size) != size) {
+    if (this->read_register(reg, pBuf, size) != i2c::ERROR_OK)
+    {
         ESP_LOGE(TAG, "DFRobot SEN0575 read error register: %d, %d, %d", reg, pBuf, size);
         return 0;
     }
