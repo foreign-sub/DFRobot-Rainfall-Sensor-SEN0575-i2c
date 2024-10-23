@@ -74,14 +74,14 @@ std::string DFRobotSen0575I2C::getFirmwareVersion_() {
     readRegister_(REG_VERSION, buff, 2);
     version = buff[0] | ( ((uint16_t)buff[1]) << 8 );
     std::string version_str = std::to_string(version >> 12) + '.' + std::to_string((version >> 8) & 0x0F) + '.' + std::to_string((version >> 4) & 0x0F) + '.' + std::to_string(version & 0x0F);
-    ESP_LOGD(TAG, "DFRobot SEN0575 firmware version: %d", version_str);
+    ESP_LOGD(TAG, "DFRobot SEN0575 firmware version: %s", version_str);
     return version_str;
 }
 float DFRobotSen0575I2C::getRainfall_() {
     uint8_t buff[4] = {0};
     readRegister_(REG_CUMULATIVE_RAINFALL, buff, 4);
     uint32_t rainfall = (buff[0] | (buff[1] << 8) | (buff[2] << 16) | (buff[3] << 24));
-    ESP_LOGD(TAG, "DFRobot SEN0575 rainfall: %d", rainfall / 10000.0f);
+    ESP_LOGD(TAG, "DFRobot SEN0575 rainfall: %.2f", rainfall / 10000.0f);
     return rainfall / 10000.0f;
 }
 
@@ -92,7 +92,7 @@ float DFRobotSen0575I2C::getRainfall_(uint8_t hour) {
         return -1;
     }
     uint32_t rainfall = (buff[0] | (buff[1] << 8) | (buff[2] << 16) | (buff[3] << 24));
-    ESP_LOGD(TAG, "DFRobot SEN0575 rainfall (%d h): %d", hour, rainfall / 10000.0f);
+    ESP_LOGD(TAG, "DFRobot SEN0575 rainfall (%d h): %.2f", hour, rainfall / 10000.0f);
     return rainfall / 10000.0f;
 }
 
@@ -108,7 +108,7 @@ float DFRobotSen0575I2C::getWorkingTime_() {
     uint8_t buff[2] = {0};
     readRegister_(REG_SYS_TIME, buff, 2);
     uint16_t workingTime = (buff[0] | (buff[1] << 8));
-    ESP_LOGD(TAG, "DFRobot SEN0575 working time: %d", workingTime / 60.0f);
+    ESP_LOGD(TAG, "DFRobot SEN0575 working time: %.2f", workingTime / 60.0f);
     return workingTime / 60.0f;
 }
 
