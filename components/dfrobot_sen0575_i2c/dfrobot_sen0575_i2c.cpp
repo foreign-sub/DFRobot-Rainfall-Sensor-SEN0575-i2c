@@ -46,6 +46,14 @@ void DFRobotSen0575I2C::update() {
         float working_time = this->getWorkingTime_();
         this->working_time_->publish_state(working_time);
     }
+    float rainfall = this->getRainfall_();
+    this->cumulative_rainfall_->publish_state(rainfall);
+    float rainfall_hour = this->getRainfall_(1);
+    this->rainfall_within_hour_->publish_state(rainfall_hour);
+    uint32_t raw_data = this->getRawData_();
+    this->raw_data_->publish_state(raw_data);
+    float working_time = this->getWorkingTime_();
+    this->working_time_->publish_state(working_time);
 }
 
 void DFRobotSen0575I2C::dump_config() {
