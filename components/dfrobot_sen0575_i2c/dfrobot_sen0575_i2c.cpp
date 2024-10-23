@@ -24,25 +24,26 @@ void DFRobotSen0575I2C::setup() {
         this->mark_failed();
         return;
     }
-    ESP_LOGCONFIG(TAG, "DFRobot SEN0575 (Firmware: %s) setup complete.", getFirmwareVersion_().c_str());
+    ESP_LOGCONFIG(TAG, "DFRobot SEN0575 (Firmware: %s) setup complete.", this->getFirmwareVersion_().c_str());
 }
 
 void DFRobotSen0575I2C::loop() {}
 
 void DFRobotSen0575I2C::update() {
     if (this->cumulative_rainfall_ != nullptr)
-      this->cumulative_rainfall_->publish_state(getRainfall_());
+      this->cumulative_rainfall_->publish_state(this->getRainfall_());
     if (this->rainfall_within_hour_ != nullptr)
-      this->rainfall_within_hour_->publish_state(getRainfall_(1));
+      this->rainfall_within_hour_->publish_state(this->getRainfall_(1));
     if (this->raw_data_ != nullptr)
-      this->raw_data_->publish_state(getRawData_());
+      this->raw_data_->publish_state(this->getRawData_());
     if (this->working_time_ != nullptr)
-      this->working_time_->publish_state(getWorkingTime_());
+      this->working_time_->publish_state(this->getWorkingTime_());
 }
 
 void DFRobotSen0575I2C::dump_config(){
     ESP_LOGCONFIG(TAG, "DFRobot Sen0575 I2C:");
     LOG_I2C_DEVICE(this);
+    ESP_LOGCONFIG(TAG, "Firmware: %s", this->getFirmwareVersion_().c_str());
     if (this->is_failed()) {
         ESP_LOGE(TAG, "Communication with DFRobot SEN0575 failed!");
     }
