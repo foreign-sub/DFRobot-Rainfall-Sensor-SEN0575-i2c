@@ -76,6 +76,22 @@ void DFRobotSen0575I2C::dump_config() {
 
 float DFRobotSen0575I2C::get_setup_priority() const { return setup_priority::DATA; }
 
+float DFRobotSen0575I2C::cumulative_rainfall() {
+    return this->getRainfall_();
+}
+
+float DFRobotSen0575I2C::rainfall_within_hour() {
+    return this->getRainfall_(1);
+}
+
+uint32_t DFRobotSen0575I2C::raw_data() {
+    return this->getRawData_();
+}
+
+float DFRobotSen0575I2C::working_time() {
+    return this->getWorkingTime_();
+}
+
 std::string DFRobotSen0575I2C::getFirmwareVersion_() {
     uint16_t version = 0;
     uint8_t buff[2] = {0};
