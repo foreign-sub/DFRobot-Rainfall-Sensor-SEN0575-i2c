@@ -83,7 +83,7 @@ void DFRobotSen0575I2C::dump_config() {
     LOG_SENSOR("  ", "Working Time", this->working_time_);
 }
 
-float DFRobotSen0575I2C::get_setup_priority() const { return setup_priority::DATA; }
+float DFRobotSen0575I2C::get_setup_priority() const { return setup_priority::HARDWARE_LATE; }
 
 float DFRobotSen0575I2C::cumulative_rainfall() {
     return this->getRainfall_();
