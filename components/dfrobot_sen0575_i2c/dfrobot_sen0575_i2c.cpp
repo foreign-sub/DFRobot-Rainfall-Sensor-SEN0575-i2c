@@ -74,7 +74,7 @@ std::string DFRobotSen0575I2C::getFirmwareVersion_() {
     readRegister_(REG_VERSION, buff, 2);
     version = buff[0] | ( ((uint16_t)buff[1]) << 8 );
     std::string version_str = std::to_string(version >> 12) + '.' + std::to_string((version >> 8) & 0x0F) + '.' + std::to_string((version >> 4) & 0x0F) + '.' + std::to_string(version & 0x0F);
-    ESP_LOGD(TAG, "DFRobot SEN0575 firmware version: %s", version_str);
+    ESP_LOGD(TAG, "DFRobot SEN0575 firmware version: %s", version_str.c_str());
     return version_str;
 }
 float DFRobotSen0575I2C::getRainfall_() {
