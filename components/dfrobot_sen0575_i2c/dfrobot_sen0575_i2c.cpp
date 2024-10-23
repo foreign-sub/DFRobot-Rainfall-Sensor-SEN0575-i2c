@@ -139,7 +139,11 @@ uint8_t DFRobotSen0575I2C::readRegister_(uint8_t reg, uint8_t *pBuf, size_t size
 }
 
 uint8_t DFRobotSen0575I2C::writeRegister_(uint8_t reg, uint8_t *pBuf, size_t size) {
-    this->write_register(reg, pBuf, size);
+    if(this->write_register(reg, pBuf, size) != i2c::ERROR_OK);
+    {
+        ESP_LOGE(TAG, "DFRobot SEN0575 write error register: %d, %d, %d", reg, pBuf, size);
+        return 0;
+    }
     ESP_LOGD(TAG, "DFRobot SEN0575 write register: %d, %d, %d", reg, pBuf, size);
     delay(100);
     return 0;
