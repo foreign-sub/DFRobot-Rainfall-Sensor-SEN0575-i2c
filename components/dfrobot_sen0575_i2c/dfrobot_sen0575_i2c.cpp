@@ -19,6 +19,10 @@ static const char *const TAG = "dfrobot_sen0575_i2c.sensor";
 
 void DFRobotSen0575I2C::setup() {
     ESP_LOGCONFIG(TAG, "Setting up DFRobot SEN0575 ...");
+    if ((this->component_state_ & COMPONENT_STATE_MASK) == COMPONENT_STATE_FAILED) {
+        this->component_state_ &= ~COMPONENT_STATE_MASK;
+        this->component_state_ |= COMPONENT_STATE_CONSTRUCTION;
+    }
     if (!begin_()) {
         ESP_LOGE("DFRobotSen0575I2C", "Failed to initialize sensor");
         this->mark_failed();
