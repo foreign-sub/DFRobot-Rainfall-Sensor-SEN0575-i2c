@@ -44,10 +44,10 @@ void DFRobotSen0575I2C::dump_config() {
     ESP_LOGCONFIG(TAG, "DFRobot Sen0575 I2C:");
     LOG_I2C_DEVICE(this);
     ESP_LOGCONFIG(TAG, "Firmware: %s", this->getFirmwareVersion_().c_str());
-    ESP_LOGCONFIG(TAG, "Cumulative Rainfall: %s", this->getRainfall_().c_str());
-    ESP_LOGCONFIG(TAG, "Rainfall Within Hour: %s", this->getRainfall_(1).c_str());
-    ESP_LOGCONFIG(TAG, "Raw Data: %s", this->getRawData_().c_str());
-    ESP_LOGCONFIG(TAG, "Working Time: %s", this->getWorkingTime_().c_str());
+    ESP_LOGCONFIG(TAG, "Cumulative Rainfall: %d", this->getRainfall_());
+    ESP_LOGCONFIG(TAG, "Rainfall Within Hour: %d", this->getRainfall_(1));
+    ESP_LOGCONFIG(TAG, "Raw Data: %d", this->getRawData_());
+    ESP_LOGCONFIG(TAG, "Working Time: %d", this->getWorkingTime_());
     if (this->is_failed()) {
         ESP_LOGE(TAG, "Communication with DFRobot SEN0575 failed!");
     }
