@@ -40,7 +40,7 @@ void DFRobotSen0575I2C::update() {
       this->working_time_->publish_state(this->getWorkingTime_());
 }
 
-void DFRobotSen0575I2C::dump_config(){
+void DFRobotSen0575I2C::dump_config() {
     ESP_LOGCONFIG(TAG, "DFRobot Sen0575 I2C:");
     LOG_I2C_DEVICE(this);
     ESP_LOGCONFIG(TAG, "Firmware: %s", this->getFirmwareVersion_().c_str());
@@ -54,8 +54,7 @@ void DFRobotSen0575I2C::dump_config(){
     LOG_SENSOR("  ", "Working Time", this->working_time_);
 }
 
-std::string DFRobotSen0575I2C::getFirmwareVersion_(void)
-{
+std::string DFRobotSen0575I2C::getFirmwareVersion_(void) {
     uint16_t version = 0;
     uint8_t buff[2] = {0};
     readRegister_(REG_VERSION, buff, 2);
