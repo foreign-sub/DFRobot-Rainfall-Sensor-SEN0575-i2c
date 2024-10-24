@@ -22,6 +22,7 @@ i2c:
   sda: GPIO21
   scl: GPIO22
   frequency: 100kHz
+  timeout: 50ms
   id: bus_a
 
 sensor:
