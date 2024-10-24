@@ -32,7 +32,7 @@ void DFRobotSen0575I2C::setup() {
 }
 
 void DFRobotSen0575I2C::loop() {
-  this->update_sensor_readings_();
+  // this->update_sensor_readings_();
 }
 
 void DFRobotSen0575I2C::update() {
