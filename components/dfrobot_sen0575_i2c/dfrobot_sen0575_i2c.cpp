@@ -31,9 +31,7 @@ void DFRobotSen0575I2C::setup() {
   ESP_LOGCONFIG(TAG, "DFRobot SEN0575 (Firmware: %s) setup complete.", this->get_firmware_version_().c_str());
 }
 
-void DFRobotSen0575I2C::loop() {
-  // this->update_sensor_readings_();
-}
+void DFRobotSen0575I2C::loop() {}
 
 void DFRobotSen0575I2C::update() {
   this->update_sensor_readings_();
