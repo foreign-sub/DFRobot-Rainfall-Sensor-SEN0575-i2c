@@ -24,7 +24,7 @@ void DFRobotSen0575I2C::setup() {
     this->component_state_ |= COMPONENT_STATE_CONSTRUCTION;
   }
   if (!this->initialize_sensor_()) {
-    ESP_LOGE("DFRobotSen0575I2C", "Failed to initialize sensor");
+    ESP_LOGE(TAG, "Failed to initialize sensor");
     this->mark_failed();
     return;
   }
