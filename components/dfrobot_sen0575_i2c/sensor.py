@@ -63,13 +63,11 @@ CONFIG_SCHEMA = cv.All(
     .extend(i2c.i2c_device_schema(CONF_DFROBOT_SEN0575_ADDRESS))
 )
 
-"""
 FINAL_VALIDATE_SCHEMA = i2c.final_validate_device_schema(
     "dfrobot_sen0575_i2c",
-    min_frequency=100000.0,
+    min_frequency=50000.0,
     max_frequency=400000.0,
 )
-"""
 
 
 async def to_code(config):
