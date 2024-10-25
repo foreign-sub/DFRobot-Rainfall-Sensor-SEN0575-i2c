@@ -61,6 +61,7 @@ void DFRobotSen0575I2C::update_sensor_readings_() {
 void DFRobotSen0575I2C::dump_config() {
   ESP_LOGCONFIG(TAG, "DFRobot Sen0575 I2C:");
   LOG_I2C_DEVICE(this);
+  ESP_LOGCONFIG(TAG, "Init: %s", this->initialize_sensor_()? "OK" : "Failed");
   ESP_LOGCONFIG(TAG, "Firmware: %s", this->get_firmware_version_().c_str());
   ESP_LOGCONFIG(TAG, "Cumulative Rainfall: %.2f", this->get_rainfall_());
   ESP_LOGCONFIG(TAG, "Rainfall Within Hour: %.2f", this->get_rainfall_for_period_(1));
