@@ -76,7 +76,6 @@ void DFRobotSen0575I2C::dump_config() {
       this->status_clear_warning();
       this->status_clear_error();
     }
-
   }
 
   LOG_UPDATE_INTERVAL(this);
@@ -86,7 +85,7 @@ void DFRobotSen0575I2C::dump_config() {
   LOG_SENSOR("  ", "Working Time", this->working_time_);
 }
 
-float DFRobotSen0575I2C::get_setup_priority() const { return setup_priority::DATA; }
+//float DFRobotSen0575I2C::get_setup_priority() const { return setup_priority::DATA; }
 
 std::string DFRobotSen0575I2C::get_firmware_version_() {
   uint16_t version = 0;
