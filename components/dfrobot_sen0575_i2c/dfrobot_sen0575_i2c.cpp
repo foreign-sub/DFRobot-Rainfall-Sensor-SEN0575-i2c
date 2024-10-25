@@ -146,8 +146,8 @@ uint8_t DFRobotSen0575I2C::set_rain_accumulated_value_(float accumulated_value) 
 bool DFRobotSen0575I2C::initialize_sensor_() {
   uint8_t buffer[4] = {0};
   this->read_register_(REGISTER_PRODUCT_ID, buffer, 4);
-  uint32_t product_id = (buffer[0] | (buffer[1] << 8) | (buffer[2] << 16) | (buffer[3] << 24));
-  uint32_t vendor_id = (buffer[0] | (buffer[1] & 0x3F) << 8);
+  uint32_t product_id = buffer[0] | (buffer[1] << 8) | ((buffer[3] & 0xC0) << 10);
+  uint32_t vendor_id = buffer[2] | ((buffer[3] & 0x3F) << 8);
   ESP_LOGD(TAG, "DFRobot SEN0575 begin: vendor_id:%04x, product_id:%04x", vendor_id, product_id);
   return (vendor_id == 0x3343 && product_id == 0x100C0);
 }
