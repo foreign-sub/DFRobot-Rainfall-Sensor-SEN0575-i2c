@@ -155,7 +155,7 @@ uint8_t DFRobotSen0575I2C::write_register_(uint8_t reg, uint8_t *buffer, size_t 
     return 0;
   }
   ESP_LOGD(TAG, "DFRobot SEN0575 write register: %d, %d, %d", reg, buffer, size);
-  delay(1);
+  delay(12);
   return 0;
 }
 
