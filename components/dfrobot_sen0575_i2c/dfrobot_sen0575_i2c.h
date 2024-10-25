@@ -19,7 +19,6 @@ class DFRobotSen0575I2C : public PollingComponent, public i2c::I2CDevice {
     void loop() override;
     void update() override;
     void dump_config() override;
-    //float get_setup_priority() const override;
 
   protected:
     std::string get_firmware_version_();

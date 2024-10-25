@@ -80,8 +80,6 @@ void DFRobotSen0575I2C::dump_config() {
   LOG_SENSOR("  ", "Working Time", this->working_time_);
 }
 
-//float DFRobotSen0575I2C::get_setup_priority() const { return setup_priority::DATA; }
-
 std::string DFRobotSen0575I2C::get_firmware_version_() {
   uint16_t version = 0;
   uint8_t buffer[2] = {0};
