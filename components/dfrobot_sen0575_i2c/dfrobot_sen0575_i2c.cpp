@@ -34,10 +34,6 @@ void DFRobotSen0575I2C::setup() {
 void DFRobotSen0575I2C::loop() {}
 
 void DFRobotSen0575I2C::update() {
-  this->update_sensor_readings_();
-}
-
-void DFRobotSen0575I2C::update_sensor_readings_() {
   if (this->cumulative_rainfall_ != nullptr) {
     float rainfall = this->get_rainfall_();
     this->cumulative_rainfall_->publish_state(rainfall);
