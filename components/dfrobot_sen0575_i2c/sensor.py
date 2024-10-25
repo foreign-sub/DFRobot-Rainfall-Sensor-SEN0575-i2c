@@ -23,7 +23,6 @@ DFRobotSen0575I2C = dfrobot_sen0575_i2c_ns.class_(
 )
 
 CONF_DFROBOT_SEN0575_ADDRESS = 0x1D
-# CONF_DFROBOT_SEN0575_ID = "dfrobot_sen0575_id"
 CONF_CUMULATIVE_RAINFALL = "cumulative_rainfall"
 CONF_RAINFALL_WITHIN_HOUR = "rainfall_within_hour"
 CONF_RAW_DATA = "raw_data"
