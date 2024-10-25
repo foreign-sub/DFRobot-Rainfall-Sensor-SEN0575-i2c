@@ -69,6 +69,14 @@ void DFRobotSen0575I2C::dump_config() {
 
   if (this->is_failed()) {
     ESP_LOGE(TAG, "Communication with DFRobot SEN0575 failed!");
+    if ((this->component_state_ & COMPONENT_STATE_MASK) == COMPONENT_STATE_FAILED) {
+      this->component_state_ &= ~COMPONENT_STATE_MASK;
+      this->component_state_ |= COMPONENT_STATE_CONSTRUCTION;
+      ESP_LOGD(TAG, "Resetting state to construction");
+      this->status_clear_warning();
+      this->status_clear_error();
+    }
+
   }
 
   LOG_UPDATE_INTERVAL(this);
