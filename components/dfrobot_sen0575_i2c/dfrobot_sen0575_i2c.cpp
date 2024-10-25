@@ -59,12 +59,15 @@ void DFRobotSen0575I2C::update_sensor_readings_() {
 void DFRobotSen0575I2C::dump_config() {
   ESP_LOGCONFIG(TAG, "DFRobot Sen0575 I2C:");
   LOG_I2C_DEVICE(this);
-  ESP_LOGCONFIG(TAG, "Init: %s", this->initialize_sensor_()? "OK" : "Failed");
-  ESP_LOGCONFIG(TAG, "Firmware: %s", this->get_firmware_version_().c_str());
-  ESP_LOGCONFIG(TAG, "Cumulative Rainfall: %.2f", this->get_rainfall_());
-  ESP_LOGCONFIG(TAG, "Rainfall Within Hour: %.2f", this->get_rainfall_for_period_(1));
-  ESP_LOGCONFIG(TAG, "Raw Data: %d", this->get_raw_data_());
-  ESP_LOGCONFIG(TAG, "Working Time: %.2f", this->get_working_time_());
+  LOG_UPDATE_INTERVAL(this);
+
+  // uncomment the following lines to show the state of the sensor at config for debbugging purposes
+  // ESP_LOGCONFIG(TAG, "Init: %s", this->initialize_sensor_()? "OK" : "Failed");
+  // ESP_LOGCONFIG(TAG, "Firmware: %s", this->get_firmware_version_().c_str());
+  // ESP_LOGCONFIG(TAG, "Cumulative Rainfall: %.2f", this->get_rainfall_());
+  // ESP_LOGCONFIG(TAG, "Rainfall Within Hour: %.2f", this->get_rainfall_for_period_(1));
+  // ESP_LOGCONFIG(TAG, "Raw Data: %d", this->get_raw_data_());
+  // ESP_LOGCONFIG(TAG, "Working Time: %.2f", this->get_working_time_());
 
   if (this->is_failed()) {
     ESP_LOGE(TAG, "Communication with DFRobot SEN0575 failed!");
@@ -72,12 +75,9 @@ void DFRobotSen0575I2C::dump_config() {
       this->component_state_ &= ~COMPONENT_STATE_MASK;
       this->component_state_ |= COMPONENT_STATE_CONSTRUCTION;
       ESP_LOGD(TAG, "Resetting state to construction");
-      this->status_clear_warning();
-      this->status_clear_error();
     }
   }
 
-  LOG_UPDATE_INTERVAL(this);
   LOG_SENSOR("  ", "Cumulative Rainfall", this->cumulative_rainfall_);
   LOG_SENSOR("  ", "Rainfall Within Hour", this->rainfall_within_hour_);
   LOG_SENSOR("  ", "Raw Data", this->raw_data_);
