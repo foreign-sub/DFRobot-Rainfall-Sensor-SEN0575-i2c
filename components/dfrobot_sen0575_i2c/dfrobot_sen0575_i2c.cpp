@@ -70,6 +70,8 @@ void DFRobotSen0575I2C::dump_config() {
     }
   }
 
+  ESP_LOGCONFIG(TAG, "Rainfall Hour: %d", this->rainfall_hour_);
+
   LOG_SENSOR("  ", "Cumulative Rainfall", this->cumulative_rainfall_);
   LOG_SENSOR("  ", "Rainfall Within Hour", this->rainfall_within_hour_);
   LOG_SENSOR("  ", "Raw Data", this->raw_data_);
