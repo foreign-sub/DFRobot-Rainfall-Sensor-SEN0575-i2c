@@ -27,7 +27,8 @@ CONF_CUMULATIVE_RAINFALL = "cumulative_rainfall"
 CONF_RAINFALL_WITHIN_HOUR = "rainfall_within_hour"
 CONF_RAW_DATA = "raw_data"
 CONF_WORKING_TIME = "working_time"
-CONF_RAINFALL_HOUR = "rainfall_hour"
+CONF_RAINFALL_HOURS = "rainfall_hours"
+CONF_RAIN_ACCUMULATED_VALUE = "rain_accumulated_value"
 
 UNIT_MILLIMETERS_PER_HOUR = "mm/h"
 
@@ -48,7 +49,7 @@ CONFIG_SCHEMA = cv.All(
                 state_class=STATE_CLASS_MEASUREMENT,
             ).extend(
                 {
-                    cv.Optional(CONF_RAINFALL_HOUR): cv.int_range(min=1, max=23),
+                    cv.Optional(CONF_RAINFALL_HOURS): cv.int_range(min=1, max=23),
                 }
             ),
             cv.Optional(CONF_RAW_DATA): sensor.sensor_schema(
@@ -86,7 +87,7 @@ async def to_code(config):
     if rainfall_within_hour_config := config.get(CONF_RAINFALL_WITHIN_HOUR):
         sens = await sensor.new_sensor(rainfall_within_hour_config)
         cg.add(var.set_rainfall_within_hour(sens))
-        cg.add(var.set_rainfall_hour(rainfall_within_hour_config[CONF_RAINFALL_HOUR]))
+        cg.add(var.set_rainfall_hours(rainfall_within_hour_config[CONF_RAINFALL_HOURS]))
 
     if raw_data_config := config.get(CONF_RAW_DATA):
         sens = await sensor.new_sensor(raw_data_config)

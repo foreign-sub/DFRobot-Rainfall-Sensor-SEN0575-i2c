@@ -35,8 +35,8 @@ void DFRobotSen0575I2C::update() {
     this->cumulative_rainfall_->publish_state(rainfall);
   }
   if (this->rainfall_within_hour_ != nullptr) {
-    float rainfall_hour = this->get_rainfall_for_period_(this->rainfall_hour_);
-    this->rainfall_within_hour_->publish_state(rainfall_hour);
+    float rainfall_hours = this->get_rainfall_for_period_(this->rainfall_hours_);
+    this->rainfall_within_hour_->publish_state(rainfall_hours);
   }
   if (this->raw_data_ != nullptr) {
     uint32_t raw_data = this->get_raw_data_();
@@ -70,7 +70,7 @@ void DFRobotSen0575I2C::dump_config() {
     }
   }
 
-  ESP_LOGCONFIG(TAG, "Rainfall Hour: %d", this->rainfall_hour_);
+  ESP_LOGCONFIG(TAG, "Rainfall Hour(s): %d", this->rainfall_hours_);
 
   LOG_SENSOR("  ", "Cumulative Rainfall", this->cumulative_rainfall_);
   LOG_SENSOR("  ", "Rainfall Within Hour", this->rainfall_within_hour_);

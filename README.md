@@ -43,6 +43,7 @@ sensor:
       name: "Cumulative Rainfall"
     rainfall_within_hour:
       name: "Rainfall within hour"
+      # rainfall_hours: 1 # optional rainfall hour (default to 1)
     raw_data:
       name: "Raw Data"
     working_time:

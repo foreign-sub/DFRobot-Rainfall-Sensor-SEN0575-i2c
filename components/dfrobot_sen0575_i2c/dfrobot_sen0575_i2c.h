@@ -14,7 +14,8 @@ class DFRobotSen0575I2C : public PollingComponent, public i2c::I2CDevice {
     void set_rainfall_within_hour(sensor::Sensor *rainfall_within_hour) { rainfall_within_hour_ = rainfall_within_hour; }
     void set_raw_data(sensor::Sensor *raw_data) { raw_data_ = raw_data; }
     void set_working_time(sensor::Sensor *working_time) { working_time_ = working_time; }
-    void set_rainfall_hour(int rainfall_hour) { this->rainfall_hour_ = rainfall_hour; };
+    void set_rainfall_hours(uint8_t rainfall_hours) { this->rainfall_hours_ = rainfall_hours; };
+    void set_rain_accumulated_value(float rain_accumulated_value) { this->rain_accumulated_value_ = rain_accumulated_value; };
 
     void setup() override;
     void loop() override;
@@ -22,7 +23,8 @@ class DFRobotSen0575I2C : public PollingComponent, public i2c::I2CDevice {
     void dump_config() override;
 
   protected:
-    int rainfall_hour_ = 1;
+    uint8_t rainfall_hours_ = 1;
+    float rain_accumulated_value_ = 0.0;
 
     std::string get_firmware_version_();
     float get_rainfall_();
