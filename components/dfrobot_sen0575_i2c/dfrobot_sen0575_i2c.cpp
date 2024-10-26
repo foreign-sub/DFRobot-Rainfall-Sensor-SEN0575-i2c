@@ -35,7 +35,7 @@ void DFRobotSen0575I2C::update() {
     this->cumulative_rainfall_->publish_state(rainfall);
   }
   if (this->rainfall_within_hour_ != nullptr) {
-    float rainfall_hour = this->get_rainfall_for_period_(1);
+    float rainfall_hour = this->get_rainfall_for_period_(this->rainfall_hour_);
     this->rainfall_within_hour_->publish_state(rainfall_hour);
   }
   if (this->raw_data_ != nullptr) {
