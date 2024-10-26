@@ -73,43 +73,43 @@ The Sensor Working Time entity will display the total working time of the sensor
 ## Methods
 
 ```cpp
-begin()
+initialize_sensor_()
 ```
 
 Initializes the sensor and checks for successful communication.
 
 ```cpp
-getFirmwareVersion()
+get_firmware_version_()
 ```
 
 Returns the firmware version of the sensor.
 
 ```cpp
-getRainfall()
+get_rainfall_()
 ```
 
 Returns the cumulative rainfall since the sensor started working.
 
 ```cpp
-getRainfall(uint8_t hour)
+get_rainfall_for_period_(uint8_t hour)
 ```
 
-Returns the cumulative rainfall within the specified time (1-24 hours).
+Returns the cumulative rainfall within the specified time (1-23 hours).
 
 ```cpp
-getRawData()
+get_raw_data_()
 ```
 
 Returns the number of tipping bucket counts.
 
 ```cpp
-setRainAccumulatedValue(float accumulatedValue)
+set_rain_accumulated_value_(float accumulatedValue)
 ```
 
 Sets the accumulated rainfall value.
 
 ```cpp
-getWorkingTime()
+get_working_time_()
 ```
 
 Returns the working time of the sensor in hours.
