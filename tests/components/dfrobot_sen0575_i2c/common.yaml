@@ -1,0 +1,20 @@
+i2c:
+  sda: ${sda_pin}
+  scl: ${scl_pin}
+  frequency: 100kHz
+  timeout: 50ms
+  id: i2c_bus_a
+
+sensor:
+  - platform: dfrobot_sen0575_i2c
+    i2c_id: i2c_bus_a
+    # id: rainfall_sensor # optional id
+    cumulative_rainfall:
+      name: "Cumulative Rainfall"
+    rainfall_within_hour:
+      name: "Rainfall within hour"
+      rainfall_hours: 1 # optional rainfall hour(s) (default to 1)
+    raw_data:
+      name: "Raw Data"
+    working_time:
+      name: "Working Time"
