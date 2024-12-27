@@ -28,6 +28,7 @@ CONF_RAINFALL_WITHIN_HOUR = "rainfall_within_hour"
 CONF_RAW_DATA = "raw_data"
 CONF_WORKING_TIME = "working_time"
 CONF_RAINFALL_HOURS = "rainfall_hours"
+CONF_RAINFALL_HOURS_MIN = 1
 CONF_RAIN_ACCUMULATED_VALUE = "rain_accumulated_value"
 
 UNIT_MILLIMETERS_PER_HOUR = "mm/h"
@@ -49,7 +50,7 @@ CONFIG_SCHEMA = cv.All(
                 state_class=STATE_CLASS_MEASUREMENT,
             ).extend(
                 {
-                    cv.Optional(CONF_RAINFALL_HOURS): cv.int_range(min=1, max=23),
+                    cv.Optional(CONF_RAINFALL_HOURS, CONF_RAINFALL_HOURS_MIN): cv.int_range(min=1, max=23),
                 }
             ),
             cv.Optional(CONF_RAW_DATA): sensor.sensor_schema(
