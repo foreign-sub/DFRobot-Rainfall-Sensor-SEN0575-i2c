@@ -5,26 +5,31 @@
 namespace esphome {
 namespace dfrobot_sen0575_i2c {
 
-static const uint8_t REGISTER_PRODUCT_ID = 0x00;
-static const uint8_t REGISTER_VENDOR_ID = 0x02;
-static const uint8_t REGISTER_VERSION = 0x0A;
-static const uint8_t REGISTER_TIME_RAINFALL = 0x0C;
-static const uint8_t REGISTER_CUMULATIVE_RAINFALL = 0x10;
-static const uint8_t REGISTER_RAW_DATA = 0x14;
-static const uint8_t REGISTER_SYSTEM_TIME = 0x18;
-static const uint8_t REGISTER_RAIN_HOUR = 0x26;
-static const uint8_t REGISTER_BASE_RAINFALL = 0x28;
+  static const uint32_t SEN_VENDOR_ID = 0x3343;
+  static const uint32_t SEN_PRODUCT_ID = 0x100C0;
 
-static const char *const TAG = "dfrobot_sen0575_i2c.sensor";
+  static const uint8_t REGISTER_PRODUCT_ID = 0x00;
+  static const uint8_t REGISTER_VENDOR_ID = 0x02;
+  static const uint8_t REGISTER_VERSION = 0x0A;
+  static const uint8_t REGISTER_TIME_RAINFALL = 0x0C;
+  static const uint8_t REGISTER_CUMULATIVE_RAINFALL = 0x10;
+  static const uint8_t REGISTER_RAW_DATA = 0x14;
+  static const uint8_t REGISTER_SYSTEM_TIME = 0x18;
+  static const uint8_t REGISTER_RAIN_HOUR = 0x26;
+  static const uint8_t REGISTER_BASE_RAINFALL = 0x28;
 
-void DFRobotSen0575I2C::setup() {
-  ESP_LOGCONFIG(TAG, "Setting up DFRobot SEN0575 ...");
-  if (!this->initialize_sensor_()) {
-    ESP_LOGE(TAG, "Failed to initialize sensor");
-    this->mark_failed();
-    return;
-  }
-  ESP_LOGCONFIG(TAG, "Setup complete. (Firmware: %s)", this->get_firmware_version_().c_str());
+  static const char *const TAG = "dfrobot_sen0575_i2c.sensor";
+
+  void DFRobotSen0575I2C::setup()
+  {
+    ESP_LOGCONFIG(TAG, "Setting up DFRobot SEN0575 ...");
+    if (!this->initialize_sensor_())
+    {
+      ESP_LOGE(TAG, "Failed to initialize sensor");
+      this->mark_failed();
+      return;
+    }
+    ESP_LOGCONFIG(TAG, "Setup complete. (Firmware: %s)", this->get_firmware_version_().c_str());
 }
 
 void DFRobotSen0575I2C::loop() {}
@@ -139,7 +144,7 @@ bool DFRobotSen0575I2C::initialize_sensor_() {
   uint32_t product_id = buffer[0] | (buffer[1] << 8) | ((buffer[3] & 0xC0) << 10);
   uint32_t vendor_id = buffer[2] | ((buffer[3] & 0x3F) << 8);
   ESP_LOGD(TAG, "DFRobot SEN0575 begin: vendor_id:%04x, product_id:%04x", vendor_id, product_id);
-  return (vendor_id == 0x3343 && product_id == 0x100C0);
+  return (vendor_id == SEN_VENDOR_ID && product_id == SEN_PRODUCT_ID);
 }
 
 uint8_t DFRobotSen0575I2C::read_register_(uint8_t reg, uint8_t *buffer, size_t size) {
